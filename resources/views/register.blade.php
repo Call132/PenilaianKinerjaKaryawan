@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-@section('title', 'Login')
+@section('title', 'Register')
 @push('style')
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
@@ -12,11 +12,11 @@
             <div class="col-md-8">
                 <div class="card-group">
                     <div class="card p-4">
-                        <form action="{{ route('login') }}" method="post">
+                        <form action="{{ route('register') }}" method="post">
                             @csrf
                             <div class="card-body">
-                                <h1>Login</h1>
-                                <p class="text-muted">Sign In to your account</p>
+                                <h1>Register</h1>
+                                <p class="text-muted">Sign up </p>
                                 @if (session('error'))
                                     <div class="alert alert-danger">
                                         {{ session('error') }}
@@ -31,6 +31,14 @@
                                     </div>
                                     <input type="text" name="username" class="form-control" placeholder="Username">
                                 </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="icon-user"></i>
+                                        </span>
+                                    </div>
+                                    <input type="email" name="email" class="form-control" placeholder="email">
+                                </div>
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -41,7 +49,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="submit" name="submit" class="btn btn-primary px-4">Login</button>
+                                        <button type="submit" name="submit" class="btn btn-primary px-4">Register</button>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +61,7 @@
                         <div class="card-body text-center">
                             <div>
                                 <h2>Hai Selamat Datang</h2>
-                                <p>Untuk Menggunakan Aplikasi Anda Harus Login Terlebih Dahulu</p>
+                                <p>Untuk Menggunakan Aplikasi Anda Harus Registrasi Terlebih Dahulu</p>
                             </div>
                         </div>
                     </div>
