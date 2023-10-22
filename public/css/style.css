@@ -1147,22 +1147,19 @@ select.form-control:not([size]):not([multiple]) {
   padding: 0 25px;
   height: 60px;
   vertical-align: middle;
+  width: fit-content;
 }
 .table:not(.table-sm) thead th {
-  border-bottom: none;
-  background-color: #00B0F0;
-  color: #00000;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  border-bottom: 1px solid black;
 }
 
-th {}
 
 th {
     text-align: center;
 }
 .table.table-md th, .table.table-md td {
   padding: 10px 15px;
+  text-align: center;
 }
 .table.table-bordered td, .table.table-bordered th {
   border-color: #000;

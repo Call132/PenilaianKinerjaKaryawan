@@ -28,64 +28,78 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('karyawan.store') }}" method="post">
+                <form action="{{ route('karyawan.update', $data->id) }}" method="post">
                     @csrf
+                    @method('PUT')
 
                     <div class="form-group row">
                         <label for="department" class="col-sm-3 col-form-label">Department</label>
                         <div class="col-sm-9">
-                            <select name="department" id="department" class="form-control">
-                                <option value="Front office">Front office</option>
-                                <option value="Housekeeping">Housekeeping</option>
-                                <option value="Engineering">Engineering</option>
-                                <option value="Accounting">Accounting</option>
-                                <option value="Sales">Sales</option>
-                                <option value="FBS">FBS</option>
-                                <option value="FBP">FBP</option>
-                                <option value="HC & Security">HC & Security</option>
+                            <select id="department" name="department" class="form-control">
+                                <option value="Front office" {{ $data->department == 'Front office' ? 'selected' : ''
+                                    }}>Front office</option>
+                                <option value="Housekeeping" {{ $data->department == 'Housekeeping' ? 'selected' : ''
+                                    }}>Housekeeping</option>
+                                <option value="Engineering" {{ $data->department == 'Engineering' ? 'selected' : ''
+                                    }}>Engineering</option>
+                                <option value="Accounting" {{ $data->department == 'Accounting' ? 'selected' : ''
+                                    }}>Accounting</option>
+                                <option value="Sales" {{ $data->department == 'Sales' ? 'selected' : '' }}>Sales
+                                </option>
+                                <option value="FBS" {{ $data->department == 'FBS' ? 'selected' : '' }}>FBS</option>
+                                <option value="FBP" {{ $data->department == 'FBP' ? 'selected' : '' }}>FBP</option>
+                                <option value="HC & Security" {{ $data->department == 'HC & Security' ? 'selected' : ''
+                                    }}>HC & Security</option>
                             </select>
+
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="name" class="col-sm-3 col-form-label">Nama</label>
                         <div class="col-sm-9">
-                            <input id="name" name="name" type="text" class="form-control" required>
+                            <input value="{{ $data->name }}" id="name" name="name" type="text" class="form-control"
+                                required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="posisi" class="col-sm-3 col-form-label">Posisi</label>
                         <div class="col-sm-9">
-
                             <select id="posisi" name="posisi" class="form-control">
-                                <option value="Casual">Casual</option>
-                                <option value="Daily Worker">Daily Worker</option>
-                                <option value="Karyawan Kontrak">Karyawan Kontrak</option>
+                                <option value="Casual" {{ $data->posisi == 'Casual' ? 'selected' : '' }}>Casual</option>
+                                <option value="Daily Worker" {{ $data->posisi == 'Daily Worker' ? 'selected' : ''
+                                    }}>Daily Worker</option>
+                                <option value="Karyawan Kontrak" {{ $data->posisi == 'Karyawan Kontrak' ? 'selected' :
+                                    '' }}>Karyawan Kontrak</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="tanggal_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
                         <div class="col-sm-9">
-                            <input id="tanggal_lahir" name="tanggal_lahir" type="date" class="form-control"required >
+                            <input value="{{ $data->tanggal_lahir }}" id="tanggal_lahir" name="tanggal_lahir"
+                                type="date" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="no_hp" class="col-sm-3 col-form-label">No HP</label>
                         <div class="col-sm-9">
-                            <input id = "no_hp" name='no_hp' type="number" class="form-control" required>
+                            <input value="{{ $data->no_hp }}" id="no_hp" name='no_hp' type="number" class="form-control"
+                                required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="joining_date" class="col-sm-3 col-form-label">Joining Date</label>
                         <div class="col-sm-9">
-                            <input id="joining_date" name="joining_date" type="date" class="form-control" required>
+                            <input value="{{ $data->joining_date }}" id="joining_date" name="joining_date" type="date"
+                                class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="status" class="col-sm-3 col-form-label">Status</label>
                         <div class="col-sm-9">
-                            <input id="status" name="status" type="text" class="form-control" required>
+                            <input value="{{ $data->status }}" id="status" name="status" type="text"
+                                class="form-control" required>
                         </div>
                     </div>
 

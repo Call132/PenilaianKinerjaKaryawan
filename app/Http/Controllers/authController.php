@@ -16,17 +16,16 @@ class authController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'name' => ['required', 'name'],
+            'name' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials)) {
-            // Jika autentikasi berhasil, redirect ke halaman yang sesuai
-            return redirect()->intended('/');
+            return redirect()->intended('/')->with('success', 'You have successfully logged in!');
         }
 
-        // Jika autentikasi gagal, kembali ke halaman login dengan pesan kesalahan
-        return redirect()->route('login')->with('error', 'Username atau password salah.');
+        return redirect()->route('login')
+            ->with('error', 'Username or password is incorrect.');
     }
 
     public function logout(Request $request)
@@ -39,8 +38,6 @@ class authController extends Controller
         return redirect('/login');
     }
 
-
-
     protected $redirectTo = '/';
 
     public function __construct()
@@ -51,9 +48,6 @@ class authController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-
-        // Setelah validasi berhasil, Anda dapat melakukan logika penyimpanan data pengguna di sini
-        // Misalnya, Anda dapat menyimpan data pengguna ke dalam tabel pengguna
 
         if ($this->create($request->all())) {
             // Jika registrasi berhasil, alihkan pengguna ke halaman yang sesuai

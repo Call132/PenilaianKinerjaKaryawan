@@ -29,7 +29,7 @@
                                             <i class="icon-user"></i>
                                         </span>
                                     </div>
-                                    <input type="text" name="username" class="form-control" placeholder="Username">
+                                    <input type="text" name="name" class="form-control" placeholder="Username">
                                 </div>
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
