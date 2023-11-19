@@ -84,7 +84,7 @@
                     <div class="form-group row">
                         <label for="no_hp" class="col-sm-3 col-form-label">No HP</label>
                         <div class="col-sm-9">
-                            <input value="{{ $data->no_hp }}" id="no_hp" name='no_hp' type="number" class="form-control"
+                            <input value="{{ $data->no_hp }}" id="no_hp" name='no_hp' type="text" class="form-control"
                                 required>
                         </div>
                     </div>

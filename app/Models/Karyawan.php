@@ -13,9 +13,7 @@ class Karyawan extends Model
 
     protected $fillable = [
         'department',
-        'position',
-        'person_budget',
-        'person_hiring',
+        'posisi',
         'name',
         'tanggal_lahir',
         'no_hp',
@@ -24,6 +22,7 @@ class Karyawan extends Model
     ];
     public function penilaian()
     {
-        return $this->hasMany(Penilaian::class, 'karyawan_id');
+        return $this->hasMany(Penilaian::class);
     }
+    
 }

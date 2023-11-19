@@ -12,11 +12,17 @@
         <div class="section-header">
             <h1>Daftar Karyawan</h1>
         </div>
+        @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @elseif (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
     </section>
     <div class="card">
-        <div class="card-header">
-            <a href="{{ route('karyawan.create') }}" class="btn btn-primary m-auto">Tambah</a>
-        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped-columns table-md">
@@ -55,7 +61,33 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <div class="flex">
+                            <a href="{{ route('karyawan.create') }}" class="btn btn-primary">Tambah</a>
+                        </div>
+                    </tfoot>
                 </table>
+                <div class="card-body">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if ($karyawan->currentPage() > 1)
+                            <li class="page-item"><a class="page-link"
+                                    href="{{ $karyawan->previousPageUrl() }}">Previous</a></li>
+                            @endif
+
+                            @for ($i = 1; $i <= $karyawan->lastPage(); $i++)
+                                <li class="page-item {{ ($i == $karyawan->currentPage()) ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $karyawan->url($i) }}">{{ $i }}</a>
+                                </li>
+                                @endfor
+
+                                @if ($karyawan->currentPage() < $karyawan->lastPage())
+                                    <li class="page-item"><a class="page-link"
+                                            href="{{ $karyawan->nextPageUrl() }}">Next</a></li>
+                                    @endif
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>

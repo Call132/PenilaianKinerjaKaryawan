@@ -46,7 +46,7 @@ class karyawanController extends Controller
 
     public function index()
     {
-        $karyawan = Karyawan::all();
+        $karyawan = Karyawan::paginate(10);
         return view('data-karyawan', compact('karyawan'));
     }
 
@@ -61,45 +61,56 @@ class karyawanController extends Controller
             return redirect()->back()->with('error', 'data not found.');
         }
 
-        // Pass the data to the view or perform any other necessary operations
-
-        // Return the view or response
         return view('karyawan-edit', compact('data'));
     }
 
 
     public function update(Request $request, $id)
     {
-        // Retrieve the record from the database based on the given $id
-        $data = Karyawan::find($id);
+        try {
+            // Retrieve the record from the database based on the given $id
+            $data = Karyawan::find($id);
 
-        $request->validate([
-            'name' => 'required',
-            'department' => 'required',
-            'tanggal_lahir' => 'required',
-            'no_hp' => 'required',
-            'joining_date' => 'required',
-            'status' => 'required',
-        ]); 
+            $request->validate([
+                'name' => 'required',
+                'department' => 'required',
+                'tanggal_lahir' => 'required',
+                'no_hp' => 'required',
+                'joining_date' => 'required',
+                'status' => 'required',
+            ]);
 
-     
+            $data->name = $request->name;
+            $data->department = $request->department;
+            $data->posisi = $request->posisi;
+            $data->tanggal_lahir = $request->tanggal_lahir;
+            $data->no_hp = $request->no_hp;
+            $data->joining_date = $request->joining_date;
+            $data->status = $request->status;
+            $data->save();
 
-        $data->name = $request->name;
-        $data->department = $request->department;
-        $data->posisi = $request->posisi;
-        $data->tanggal_lahir = $request->tanggal_lahir;
-        $data->no_hp = $request->no_hp;
-        $data->joining_date = $request->joining_date;
-        $data->status = $request->status;
-        $data->save();
-
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil diubah');
+            return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil diubah');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with(
+                'error',
+                'Karyawan gagal diubah. Mohon periksa kembali data.'
+            );
+        }
     }
     public function delete($id)
     {
         // Retrieve the record from the database based on the given $id
-        $data = Karyawan::find($id);
+        try {
+            $data = Karyawan::find($id);
 
-        $data->delete();
+            $data->delete();
+            return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus');
+        } catch (\Exception $e) {
+            return dd($e);
+            return redirect()->back()->withInput()->with(
+                'error',
+                'Karyawan gagal dihapus. Mohon periksa kembali data.'
+            );
+        }
     }
 }

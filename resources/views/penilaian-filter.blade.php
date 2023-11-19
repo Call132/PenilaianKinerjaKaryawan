@@ -39,7 +39,7 @@
                 </div>
             </form>
 
-            @dump($data)
+            
             @if ($data)
             <h2>Daftar Karyawan Departemen </h2>
             <table>
@@ -51,7 +51,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td>{{ $loop->iteration }}</td>
                     </tr>
                 </tbody>
             </table>

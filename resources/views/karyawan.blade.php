@@ -30,7 +30,6 @@
             <div class="card-body">
                 <form action="{{ route('karyawan.store') }}" method="post">
                     @csrf
-
                     <div class="form-group row">
                         <label for="department" class="col-sm-3 col-form-label">Department</label>
                         <div class="col-sm-9">
@@ -46,7 +45,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label for="name" class="col-sm-3 col-form-label">Nama</label>
                         <div class="col-sm-9">
@@ -56,24 +54,20 @@
                     <div class="form-group row">
                         <label for="posisi" class="col-sm-3 col-form-label">Posisi</label>
                         <div class="col-sm-9">
-
-                            <select id="posisi" name="posisi" class="form-control">
-                                <option value="Casual">Casual</option>
-                                <option value="Daily Worker">Daily Worker</option>
-                                <option value="Karyawan Kontrak">Karyawan Kontrak</option>
-                            </select>
+                            <input id="posisi" name="posisi" type="text" class="form-control" required>
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label for="tanggal_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
                         <div class="col-sm-9">
-                            <input id="tanggal_lahir" name="tanggal_lahir" type="date" class="form-control"required >
+                            <input id="tanggal_lahir" name="tanggal_lahir" type="date" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="no_hp" class="col-sm-3 col-form-label">No HP</label>
                         <div class="col-sm-9">
-                            <input id = "no_hp" name='no_hp' type="number" class="form-control" required>
+                            <input id="no_hp" name='no_hp' type="text" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -85,9 +79,15 @@
                     <div class="form-group row">
                         <label for="status" class="col-sm-3 col-form-label">Status</label>
                         <div class="col-sm-9">
-                            <input id="status" name="status" type="text" class="form-control" required>
+                            <select id="status" name="status" class="form-control">
+                                <option value="Casual">Casual</option>
+                                <option value="Daily Worker">Daily Worker</option>
+                                <option value="Karyawan Kontrak">Karyawan Kontrak</option>
+                            </select>
                         </div>
                     </div>
+
+
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>

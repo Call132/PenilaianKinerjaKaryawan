@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class kriteria extends Model
 {
-    use HasFactory;
+  protected $table = 'kriteria';
+  protected $fillable = [
+    'kriteria',
+    'bobot',
+
+
+
+  ];
+
+
+  use HasFactory;
 }

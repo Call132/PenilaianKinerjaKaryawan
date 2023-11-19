@@ -41,4 +41,6 @@ Route::get('/logout', [authController::class, 'logout'])->name('logout');
 
 Route::get('/penilaian', [penilaianController::class, 'index'])->name('penilaian.index');
 
-Route::post('/penilaian/filter', [penilaianController::class, 'filter'])->name('penilaian.filter');
+Route::post('/penilaian', [penilaianController::class, 'filter'])->name('penilaian.filter');
+Route::get('/penilaian/form/{id}', [penilaianController::class, 'form'])->name('penilaian.form');
+Route::post('/penilaian/form', [penilaianController::class, 'store'])->name('penilaian.store');
