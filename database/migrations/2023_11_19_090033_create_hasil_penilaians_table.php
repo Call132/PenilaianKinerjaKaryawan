@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('karyawan_id');
             $table->integer('skor')->nullable();
             $table->string('komentar')->nullable();
+            $table->decimal('skor_normalisasi', 5, 2)->nullable();
+            $table->decimal('nilai_akhir', 8, 2)->nullable();
             $table->foreign('penilaian_id')->references('id')->on('penilaian')->onDelete('cascade');
             $table->foreign('kriteria_id')->references('id')->on('kriteria')->onDelete('cascade');
             $table->foreign('karyawan_id')->references('id')->on('karyawan')->onDelete('cascade');

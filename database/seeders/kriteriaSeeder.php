@@ -68,6 +68,10 @@ class kriteriaSeeder extends Seeder
                 'bobot' => 0.05
             ],
             [
+                'kriteria' => 'time_management',
+                'bobot' => 0.2
+            ],
+            [
                 'kriteria' => 'integrity',
                 'bobot' => 0.05
             ],
@@ -79,10 +83,7 @@ class kriteriaSeeder extends Seeder
                 'kriteria' => 'analyze_perspective',
                 'bobot' => 0.05
             ],
-            [
-                'kriteria' => 'time_management',
-                'bobot' => 0.2
-            ],
+
         ];
         DB::table('kriteria')->insert($kriteria);
     }

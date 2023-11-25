@@ -20,9 +20,19 @@ class Karyawan extends Model
         'joining_date',
         'status',
     ];
+    public function sudahDinilai($periode, $tahun)
+    {
+        return $this->penilaian()
+            ->where('periode', $periode)
+            ->whereYear('tanggal_penilaian', $tahun)
+            ->exists();
+    }
     public function penilaian()
     {
-        return $this->hasMany(Penilaian::class);
+        return $this->hasMany(Penilaian::class, 'karyawan_id', 'id');
     }
-    
+    public function hasilPenilaian()
+    {
+        return $this->hasMany(hasilPenilaian::class, 'karyawan_id', 'id');
+    }
 }

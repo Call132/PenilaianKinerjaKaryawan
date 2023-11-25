@@ -15,12 +15,14 @@ class hasilPenilaian extends Model
         'karyawan_id',
         'skor',
         'komentar',
+        'skor_normalisasi',
+        'nilai_akhir',
     ];
     public function kriteria()
     {
         return $this->belongsTo(kriteria::class);
     }
     public function karyawan(){
-        return $this->belongsTo(Karyawan::class);
+        return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id');
     }
 }

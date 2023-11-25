@@ -12,19 +12,21 @@ class penilaian extends Model
     protected $fillable = [
         'tanggal_penilaian',
         'tujuan',
-        'periode_penilaian',
+        'tahun',
+        'periode',
         'karyawan_id',
-        
+
     ];
     use HasFactory;
 
     public function hasilPenilaian()
     {
-        return $this->hasMany(hasilPenilaian::class);
+        return $this->hasMany(hasilPenilaian::class, 'penilaian_id', 'id');
     }
+    
 
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class);
+        return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id');
     }
 }

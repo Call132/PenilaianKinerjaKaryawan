@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\hasilPenilaianController;
 use App\Http\Controllers\karyawanController;
 use App\Http\Controllers\penilaianController;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +44,9 @@ Route::get('/penilaian', [penilaianController::class, 'index'])->name('penilaian
 
 Route::post('/penilaian', [penilaianController::class, 'filter'])->name('penilaian.filter');
 Route::get('/penilaian/form/{id}', [penilaianController::class, 'form'])->name('penilaian.form');
+Route::get('/penilaian/edit/{id}', [penilaianController::class, 'edit'])->name('penilaian.edit');
+Route::put('/penilaian/edit/{id}', [penilaianController::class, 'update'])->name('penilaian.update');
 Route::post('/penilaian/form', [penilaianController::class, 'store'])->name('penilaian.store');
+
+Route::get('hasil-penilaian', [hasilPenilaianController::class, 'index'])->name('hasiPenilaian.index');
+

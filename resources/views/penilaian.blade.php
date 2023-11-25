@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </form>
-            <h2 class="text-center">Daftar Karyawan Departemen {{ $department }}</h2>
+            <h2 class="text-center">Daftar Karyawan</h2>
             <form action="" method="">
                 <div class="table-responsive">
                     <table class="table table-striped-columns table-md">
@@ -86,31 +86,47 @@
                             @foreach ($karyawan as $data)
 
                             @php
-                            $status = $data->penilaian_status;
-                            if ($status == false) {
-                            $status = 'Belum Dinilai';
-                            }else {
-                            $status = 'Sudah Dinilai';
-                            }
-                            @endphp
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->name }}</td>
-                                <td>
-                                    @if ($status == 'Belum Dinilai')
-                                    <span class="badge badge-danger">{{ $status }}</span>
-                                    @else
-                                    <span class="badge badge-success">{{ $status }}</span>
-                                    @endif
-                                </td>
-                                <td><a href="{{ route('penilaian.form', $data->id) }}" class="btn btn-primary"><i
-                                            class="fa-solid fa-file"></i> Buat</a></td>
+                            // Mendapatkan periode dan tahun saat ini
+                            $periode = date('m') <= 6 ? 'janjun' : 'juldec' ; $tahun=date('Y'); $status=$data->
+                                sudahDinilai($periode, $tahun) ? 'Sudah Dinilai' : 'Belum Dinilai';
+                                $badgeColor = $status === 'Sudah Dinilai' ? 'badge-success' : 'badge-secondary';
+                                @endphp
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $data->name }}</td>
+                                    <td>
+                                        <span><span class="badge {{ $badgeColor }}">{{ $status }}</span></span>
+                                    </td>
+                                    <td><a href="{{ route('penilaian.form', $data->id) }}" class="btn btn-primary">
+                                            <i class="fa-solid fa-file"></i> Buat
+                                        </a>
+                                        <a href="{{ route('penilaian.edit' , $data->id) }}" class="btn btn-warning"><i class="fa-solid fa-edit"></i> Edit</a>
+                                    </td>
 
-                            </tr>
-                            @endforeach
+                                </tr>
+                                @endforeach
                         </tbody>
                     </table>
-                  
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if ($karyawan->currentPage() > 1)
+                            <li class="page-item"><a class="page-link"
+                                    href="{{ $karyawan->previousPageUrl() }}">Previous</a></li>
+                            @endif
+
+                            @for ($i = 1; $i <= $karyawan->lastPage(); $i++)
+                                <li class="page-item {{ ($i == $karyawan->currentPage()) ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $karyawan->url($i) }}">{{ $i }}</a>
+                                </li>
+                                @endfor
+                                @if ($karyawan->currentPage() < $karyawan->lastPage())
+                                    <li class="page-item"><a class="page-link"
+                                            href="{{ $karyawan->nextPageUrl() }}">Next</a></li>
+                                    @endif
+                        </ul>
+                    </nav>
+
+
                 </div>
             </form>
             @endif

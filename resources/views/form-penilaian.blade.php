@@ -88,38 +88,52 @@
                         <input type="date" name="tanggal_penilaian" id="tglPenilaian" class="form-control"
                             placeholder="">
                     </div>
+
+
                     <div class="col-md-3">
-                        <label for="periodePenilaian">Periode Awal Penilaian :</label>
-                        <input type="month" class="form-control" id="periodePenilaian" name="periode_penilaian">
+
+                        <label for="tahun">Tahun:</label>
+                        <input type="number" class="form-control" id="tahun" name="tahun" required>
                     </div>
+
+                    <div class="col-md-3">
+                        <label for="periode">Periode:</label>
+                        <select class="form-control" id="periode" name="periode" required>
+                            <option value="janjun">Januari - Juni</option>
+                            <option value="juldec">Juli - Desember</option>
+                        </select>
+                    </div>
+
                 </div>
                 <hr>
                 <div class="card-header">
                     <h6>Tujuan Penilaian (Centang kotak yang sesuai)</h6>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" value="masaPercobaan" name="tujuan" id="masaPercobaan">
+                    <input class="form-check-input" type="radio" value="masaPercobaan" name="tujuan" id="masaPercobaan" required>
                     <label class="form-check-label" for="masaPercobaan">
                         Masa Percobaan 1,2,3
                     </label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" id="promosi">
+                    <input class="form-check-input" type="radio" name="tujuan" value="promosi" id="promosi" required>
                     <label class="form-check-label" for="promosi">
                         Promosi
                     </label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" id="penilaianBerkala">
+                    <input class="form-check-input" type="radio" name="tujuan" value="penilaianBerkala"
+                        id="penilaianBerkala" required>
                     <label class="form-check-label" for="penilaianBerkala">
                         Penilaian Berkala
                     </label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" id="reviewEnamBulan">
+                    <input class="form-check-input" type="radio" name="tujuan" value="reviewEnamBulan"
+                        id="reviewEnamBulan" required>
                     <label class="form-check-label" for="reviewEnamBulan">
                         Review Enam Bulan
                     </label>
@@ -139,96 +153,236 @@
                     <thead>
                         <tr>
                             <th>Kriteria Penilaian</th>
-                            <th>Bobot</th>
+                            <th>Skor</th>
                             <th>Komentar</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Service Spirit</td>
-                            <td><input type="text" class="form-control" name="nilai_service_spirit"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_service_spirit" id="nilai_service_spirit">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_service_spirit"></td>
                         </tr>
                         <tr>
                             <td>Customer Focus/Quality of Work</td>
-                            <td><input type="text" class="form-control" name="nilai_customer_focus"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_customer_focus" id="nilai_customer_focus">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_customer_focus"></td>
                         </tr>
                         <tr>
                             <td>Sales Ability</td>
-                            <td><input type="text" class="form-control" name="nilai_sales_ability"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_sales_ability" id="nilai_sales_ability">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_sales_ability"></td>
                         </tr>
                         <tr>
                             <td>Initiative</td>
-                            <td><input type="text" class="form-control" name="nilai_initiative"> </td>
+                            <td><select class="form-control" name="nilai_initiative" id="nilai_initiative">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select></td>
                             <td><input type="text" class="form-control" name="komentar_initiative"></td>
                         </tr>
                         <tr>
                             <td>Adaptation</td>
-                            <td><input type="text" class="form-control" name="nilai_adaptation"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_adaptation" id="nilai_adaptation">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_adaptation"></td>
                         </tr>
                         <tr>
                             <td>Decision Making</td>
-                            <td><input type="text" class="form-control" name="nilai_decision_making"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_decision_making" id="nilai_decision_making">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_decision_making"></td>
                         </tr>
                         <tr>
                             <td>Change Management</td>
-                            <td><input type="text" class="form-control" name="nilai_change_management"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_change_management"
+                                    id="nilai_change_management">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_change_management"></td>
                         </tr>
                         <tr>
                             <td>Communication</td>
-                            <td><input type="text" class="form-control" name="nilai_communication"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_communication" id="nilai_communication">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_communication"></td>
                         </tr>
                         <tr>
                             <td>Team Coordination/Commitment</td>
-                            <td><input type="text" class="form-control" name="nilai_team_coordination"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_team_coordination"
+                                    id="nilai_team_coordination">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_team_coordination"></td>
                         </tr>
                         <tr>
                             <td>Leadership/Team Spirit</td>
-                            <td><input type="text" class="form-control" name="nilai_leadership"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_leadership" id="nilai_leadership">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_leadership"></td>
                         </tr>
                         <tr>
                             <td>People Development</td>
-                            <td><input type="text" class="form-control" name="nilai_people_development"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_people_development"
+                                    id="nilai_people_development">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_people_development"></td>
                         </tr>
                         <tr>
                             <td>Commercial Awareness</td>
-                            <td><input type="text" class="form-control" name="nilai_commercial_awareness"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_commercial_awareness"
+                                    id="nilai_commercial_awareness">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_commercial_awareness"></td>
                         </tr>
                         <tr>
                             <td>Problem Solving</td>
-                            <td><input type="text" class="form-control" name="nilai_problem_solving"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_problem_solving" id="nilai_problem_solving">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_problem_solving"></td>
                         </tr>
                         <tr>
+                            <td>Time and Task Management</td>
+                            <td>
+                                <select class="form-control" name="nilai_time_management" id="nilai_time_management">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control" name="komentar_time_management"></td>
+                        </tr>
+                        <tr>
                             <td>Integrity</td>
-                            <td><input type="text" class="form-control" name="nilai_integrity"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_integrity" id="nilai_integrity">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_integrity"></td>
                         </tr>
                         <tr>
                             <td>Corporate Sense</td>
-                            <td><input type="text" class="form-control" name="nilai_corporate_sense"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_corporate_sense" id="nilai_corporate_sense">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_corporate_sense"></td>
                         </tr>
                         <tr>
                             <td>Capacity of Analyze Perspective</td>
-                            <td><input type="text" class="form-control" name="nilai_analyze_perspective"> </td>
+                            <td>
+                                <select class="form-control" name="nilai_analyze_perspective"
+                                    id="nilai_analyze_perspective">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
                             <td><input type="text" class="form-control" name="komentar_analyze_perspective"></td>
                         </tr>
-                        <tr>
-                            <td>Time and Task Management</td>
-                            <td> <input type="text" class="form-control" name="nilai_time_management"></td>
-                            <td><input type="text" class="form-control" name="komentar_time_management"></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
 

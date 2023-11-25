@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('karyawan_id');
             $table->string('tujuan');
             $table->date('tanggal_penilaian');
-            $table->date('periode_penilaian');
+            $table->year('tahun');
+            $table->enum('periode', ['janjun', 'juldec']);
             $table->timestamps();
-            $table->integer('skor')->nullable();
-            $table->string('komentar')->nullable();
+            $table->index(['karyawan_id', 'tahun', 'periode']);
             $table->foreign('karyawan_id')->references('id')->on('karyawan')->onDelete('cascade');
         });
     }
