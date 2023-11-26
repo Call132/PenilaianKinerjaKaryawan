@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="{{ asset('css/components.css') }}">
 
 </head>
-</head>
 
 <body>
     <div id="app">

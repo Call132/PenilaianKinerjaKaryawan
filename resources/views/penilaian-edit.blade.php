@@ -171,21 +171,24 @@
                         @foreach ($kriteriaNames as $kriteriaName)
                         <tr>
                             <td>{{ ucwords(str_replace('_', ' ', $kriteriaName)) }}</td>
-                            <td><input type="text" value="{{ $skor[$kriteriaName] }}" class="form-control"
-                                    name="nilai_{{ $kriteriaName }}"> </td>
-                            <td><input type="text" class="form-control" name="komentar_{{ $kriteriaName }}"
-                                    value="{{ $komentar[$kriteriaName]  }}"></td>
+                            <td>
+                                <select name="nilai_{{ $kriteriaName }}" class="form-control" id="">
+                                    <option value="{{ $skor[$kriteriaName] }}">{{ $skor[$kriteriaName] }}</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="komentar_{{ $kriteriaName }}"
+                                    value="{{ $komentar[$kriteriaName]  }}">
+                            </td>
                         </tr>
-
                         @endforeach
-
                     </tbody>
                 </table>
-
-
-
-
-
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

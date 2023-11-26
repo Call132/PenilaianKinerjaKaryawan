@@ -97,10 +97,14 @@
                                     <td>
                                         <span><span class="badge {{ $badgeColor }}">{{ $status }}</span></span>
                                     </td>
-                                    <td><a href="{{ route('penilaian.form', $data->id) }}" class="btn btn-primary">
+                                    <td>
+                                        <a href="{{ route('penilaian.form', $data->id) }}" class="btn btn-primary">
                                             <i class="fa-solid fa-file"></i> Buat
                                         </a>
-                                        <a href="{{ route('penilaian.edit' , $data->id) }}" class="btn btn-warning"><i class="fa-solid fa-edit"></i> Edit</a>
+                                        <a href="{{ route('penilaian.edit' , $data->id) }}" class="btn btn-warning"><i
+                                                class="fa-solid fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{{ route('penilaian.cetak', $data->id) }}" class="btn btn-info"><i class="fa-solid fa-file"></i></a>
                                     </td>
 
                                 </tr>

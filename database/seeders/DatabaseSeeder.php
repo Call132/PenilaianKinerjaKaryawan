@@ -17,11 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('12345678'),
-        ]);
+        
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -30,5 +26,6 @@ class DatabaseSeeder extends Seeder
 
         Karyawan::factory(30)->create();
         $this->call(kriteriaSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

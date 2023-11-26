@@ -45,7 +45,7 @@
     <div class="card">
         <div class="card-body">
             <table class="table ">
-                <thead class="text-align-left">
+                <thead>
                     <tr>
                         <th>#</th>
                         <th>Nama Karyawan</th>
@@ -53,11 +53,8 @@
                         <th>Rekomendasi</th>
                     </tr>
                 </thead>
-                <tbody>
-                
-                    
+                <tbody >
                     @foreach ($karyawan as $item)
-                    
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->name }}</td>

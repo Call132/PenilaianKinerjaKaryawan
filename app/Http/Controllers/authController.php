@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use Illuminate\Support\Facades\Session;
 
 class authController extends Controller
 {
@@ -19,6 +19,7 @@ class authController extends Controller
             'name' => ['required', 'string'],
             'password' => ['required'],
         ]);
+        $request->session()->regenerate();
 
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/')->with('success', 'You have successfully logged in!');
@@ -30,20 +31,18 @@ class authController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        Session::flush();
+        Auth::logout();
         return redirect('/login');
     }
 
     protected $redirectTo = '/';
 
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+
 
     public function register(Request $request)
     {

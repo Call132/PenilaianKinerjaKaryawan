@@ -7,6 +7,7 @@ use App\Models\Karyawan;
 use App\Models\kriteria;
 use App\Models\KriteriaPenilaian;
 use App\Models\penilaian;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -220,4 +221,79 @@ class penilaianController extends Controller
             return dd($e);
         }
     }
+    private function calculatePeriod()
+{
+    // Get the current month
+    $currentMonth = now()->month;
+    $currentYear = now()->year;
+
+    // Determine the period based on the current month
+    return ($currentMonth >= 1 && $currentMonth <= 6) ? 'janjun' : 'juldec';
+}
+    public function cetak($id)
+    {
+        try {
+            $karyawan = Karyawan::findOrfail($id);
+            $penilaian = Penilaian::where('karyawan_id', $karyawan->id)->where('tahun' , now()->year)
+            ->where('periode', $this->calculatePeriod())
+            ->first();;
+            
+            if($penilaian->periode == 'janjun'){
+                        $penilaian->periode = 'Januari - Juni';
+                        }elseif($penilaian->periode == 'juldec'){
+                        $penilaian->periode = 'Juli - Desember';
+                        }
+                        
+            $kriteriaNames = [
+                'service_spirit',
+                'customer_focus',
+                'sales_ability',
+                'initiative',
+                'adaptation',
+                'decision_making',
+                'change_management',
+                'communication',
+                'team_coordination',
+                'leadership',
+                'people_development',
+                'commercial_awareness',
+                'problem_solving',
+                'time_management',
+                'integrity',
+                'corporate_sense',
+                'analyze_perspective',
+            ];
+
+            $skor = [];
+            $komentar = [];
+            foreach ($kriteriaNames as $kriteriaName) {
+                $kriteria = Kriteria::where('kriteria', $kriteriaName)->first();
+
+                if (!$kriteria) {
+                    return response()->json(['message' => 'Kriteria tidak ditemukan: ' . $kriteriaName], 404);
+                }
+
+                $hasilPenilaian = $penilaian->hasilPenilaian()
+                    ->where('penilaian_id', $penilaian->id)
+                    ->where('kriteria_id', $kriteria->id)
+                    ->where('karyawan_id', $karyawan->id)
+                    ->first();
+
+                $skor[$kriteriaName] = $hasilPenilaian ? $hasilPenilaian->skor : null;
+                $komentar[$kriteriaName] = $hasilPenilaian ? $hasilPenilaian->komentar : null;
+            }
+            $pdf = Pdf::loadView('laporanPenilaian', compact('karyawan', 'penilaian', 'kriteriaNames', 'skor', 'komentar'));
+            $pdfFileName = 'laporan penilaian ' . $karyawan->name . ' ' .$penilaian->periode . ' ' .$penilaian->tahun .  '.pdf';
+            $pdf->save(storage_path('app/public/pdf/' . $pdfFileName));
+            $path = 'storage/pdf/' . $pdfFileName;
+            
+            
+            
+            return redirect($path);
+            return view('laporanPenilaian', compact('karyawan', 'penilaian', 'kriteriaNames', 'skor', 'komentar'));
+        } catch (\Exception $e) {
+            return dd($e);
+        }
+    }
+    
 }

@@ -19,6 +19,7 @@ class Karyawan extends Model
         'no_hp',
         'joining_date',
         'status',
+        'rekomendasi'
     ];
     public function sudahDinilai($periode, $tahun)
     {

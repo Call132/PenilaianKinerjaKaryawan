@@ -7,17 +7,21 @@ use App\Models\Karyawan;
 use App\Models\kriteria;
 use App\Models\penilaian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class hasilPenilaianController extends Controller
 {
     public function index()
     {
+       
         try {
             $karyawan = Karyawan::paginate(10);
+            
 
             foreach ($karyawan as $karyawanItem) {
                 $hasilPenilaian = $karyawanItem->hasilPenilaian;
-                $nilaiAkhir = 0;
+                $nilaiAkhir = 0; // Reset nilaiAkhir for each karyawanItem
+
                 if ($hasilPenilaian->isEmpty()) {
                     $karyawanItem->update(['rekomendasi' => 'Belum Dinilai']);
                     continue;
@@ -39,8 +43,8 @@ class hasilPenilaianController extends Controller
                 // Perhitungan rekomendasi setelah selesai iterasi hasil penilaian
                 $rekomendasi = $nilaiAkhir >= 0.8 ? 'Kinerja Sangat Baik' : ($nilaiAkhir >= 0.6 ? 'Kinerja Baik' : ($nilaiAkhir >= 0.4 ? 'Kinerja Cukup' : 'Kinerja Kurang'));
                 $karyawanItem->rekomendasi = $rekomendasi;
+                $nilaiAkhir = 0;
             }
-
             // Setelah selesai iterasi karyawan, tampilkan view
             return view('hasilPenilaian', compact('karyawan'));
         } catch (\Exception $e) {

@@ -101,7 +101,7 @@ class karyawanController extends Controller
     {
         // Retrieve the record from the database based on the given $id
         try {
-            $data = Karyawan::find($id);
+            $data = Karyawan::findOrfail($id);
 
             $data->delete();
             return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus');
