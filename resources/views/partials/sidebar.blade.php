@@ -32,7 +32,7 @@
             </li>
             <li class="nav">
                 <a href="{{ url('/hasil-penilaian') }}" class="nav-link" style="line-height: 1;"><i
-                        class="fas fa-fire"></i><span>Penilaian SAW</span></a>
+                        class="fas fa-fire"></i><span>Rekomendasi</span></a>
 
             </li>
             <li class="nav">
@@ -61,7 +61,7 @@
             </li>
             <li class="nav">
                 <a href="{{ url('/hasil-penilaian') }}" class="nav-link" style="line-height: 1;"><i
-                        class="fas fa-fire"></i><span>Penilaian SAW</span></a>
+                        class="fas fa-fire"></i><span>rekomendasi</span></a>
 
             </li>
 

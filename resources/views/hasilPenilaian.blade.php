@@ -53,7 +53,7 @@
                         <th>Rekomendasi</th>
                     </tr>
                 </thead>
-                <tbody >
+                <tbody>
                     @foreach ($karyawan as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>

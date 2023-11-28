@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KaryawanExport;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class karyawanController extends Controller
 {
@@ -46,7 +48,7 @@ class karyawanController extends Controller
 
     public function index()
     {
-        $karyawan = Karyawan::paginate(10);
+        $karyawan = Karyawan::orderBy('department')->paginate(10);
         return view('data-karyawan', compact('karyawan'));
     }
 
@@ -112,5 +114,10 @@ class karyawanController extends Controller
                 'Karyawan gagal dihapus. Mohon periksa kembali data.'
             );
         }
+    }
+    public function export (){
+        $karyawan = Karyawan::all();
+
+        return Excel::download(new KaryawanExport($karyawan), 'karyawan.xlsx');
     }
 }

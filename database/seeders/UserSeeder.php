@@ -17,13 +17,40 @@ class UserSeeder extends Seeder
     {
         Permission::create(['name' => 'edit-Karyawan']);
         Permission::create(['name' => 'hapus-Karyawan']);
+        Permission::create(['name' => 'input-nilai']);
+        Permission::create(['name' => 'buat-laporan']);
+        Permission::create(['name' => 'input-karyawan']);
+        Permission::create(['name' => 'lihat-rekomendasi']);
+
+
 
         Role::create(['name' => 'admin']);
-        Role::create(['name' => 'user']);
+        Role::create(['name' => 'HRD']);
+        Role::create(['name' => 'head of department']);
+        Role::create(['name' => 'general manager']);
 
         $admin = Role::findByName('admin');
         $admin->givePermissionTo('edit-Karyawan');
         $admin->givePermissionTo('hapus-Karyawan');
+        $admin->givePermissionTo('input-nilai');
+        $admin->givePermissionTo('buat-laporan');
+        $admin->givePermissionTo('input-karyawan');
+        $admin->givePermissionTo('lihat-rekomendasi');
+
+
+        $hod = Role::findByName('head of department');
+        $hod->givePermissionTo('input-karyawan');
+        $hod->givePermissionTo('edit-Karyawan');
+        $hod->givePermissionTo('hapus-Karyawan');
+        $hod->givePermissionTo('input-nilai');
+        $hod->givePermissionTo('buat-laporan');
+
+        $gm = Role::findByName('general manager');
+        $gm->givePermissionTo('edit-Karyawan');
+        $gm->givePermissionTo('lihat-rekomendasi');
+
+        $hrd = Role::findByName('HRD');
+        $hrd->givePermissionTo('input-nilai');
 
         User::create([
             'name' => 'admin',
@@ -31,9 +58,14 @@ class UserSeeder extends Seeder
             'password' => bcrypt('admin123'),
         ])->assignRole('admin');
         User::create([
-            'name' => 'user',
+            'name' => 'hrd',
             'email' => 'user@example.com',
             'password' => bcrypt('12345678'),
-        ])->assignRole('user');
+        ])->assignRole('hrd');
+        User::create([
+            'name' => 'general manajer',
+            'email' => 'gm@example.com',
+            'password' => bcrypt('gm123456')
+        ])->assignRole('general manager');
     }
 }

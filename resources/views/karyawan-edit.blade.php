@@ -65,13 +65,8 @@
                     <div class="form-group row">
                         <label for="posisi" class="col-sm-3 col-form-label">Posisi</label>
                         <div class="col-sm-9">
-                            <select id="posisi" name="posisi" class="form-control">
-                                <option value="Casual" {{ $data->posisi == 'Casual' ? 'selected' : '' }}>Casual</option>
-                                <option value="Daily Worker" {{ $data->posisi == 'Daily Worker' ? 'selected' : ''
-                                    }}>Daily Worker</option>
-                                <option value="Karyawan Kontrak" {{ $data->posisi == 'Karyawan Kontrak' ? 'selected' :
-                                    '' }}>Karyawan Kontrak</option>
-                            </select>
+                            <input value="{{ $data->posisi }}" id="posisi" name="posisi" type="text"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -95,14 +90,6 @@
                                 class="form-control" required>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="status" class="col-sm-3 col-form-label">Status</label>
-                        <div class="col-sm-9">
-                            <input value="{{ $data->status }}" id="status" name="status" type="text"
-                                class="form-control" required>
-                        </div>
-                    </div>
-
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

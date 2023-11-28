@@ -87,10 +87,10 @@ class penilaianController extends Controller
                 'people_development',
                 'commercial_awareness',
                 'problem_solving',
+                'time_management',
                 'integrity',
                 'corporate_sense',
                 'analyze_perspective',
-                'time_management',
             ];
             $karyawan->save();
             $penilaian->save();
@@ -138,10 +138,10 @@ class penilaianController extends Controller
                 'people_development',
                 'commercial_awareness',
                 'problem_solving',
+                'time_management',
                 'integrity',
                 'corporate_sense',
                 'analyze_perspective',
-                'time_management',
             ];
 
             $skor = [];
@@ -192,10 +192,10 @@ class penilaianController extends Controller
                 'people_development',
                 'commercial_awareness',
                 'problem_solving',
+                'time_management',
                 'integrity',
                 'corporate_sense',
                 'analyze_perspective',
-                'time_management',
             ];
 
             $penilaian = Penilaian::findOrFail($id);
@@ -222,28 +222,28 @@ class penilaianController extends Controller
         }
     }
     private function calculatePeriod()
-{
-    // Get the current month
-    $currentMonth = now()->month;
-    $currentYear = now()->year;
+    {
+        // Get the current month
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
 
-    // Determine the period based on the current month
-    return ($currentMonth >= 1 && $currentMonth <= 6) ? 'janjun' : 'juldec';
-}
+        // Determine the period based on the current month
+        return ($currentMonth >= 1 && $currentMonth <= 6) ? 'janjun' : 'juldec';
+    }
     public function cetak($id)
     {
         try {
             $karyawan = Karyawan::findOrfail($id);
-            $penilaian = Penilaian::where('karyawan_id', $karyawan->id)->where('tahun' , now()->year)
-            ->where('periode', $this->calculatePeriod())
-            ->first();;
-            
-            if($penilaian->periode == 'janjun'){
-                        $penilaian->periode = 'Januari - Juni';
-                        }elseif($penilaian->periode == 'juldec'){
-                        $penilaian->periode = 'Juli - Desember';
-                        }
-                        
+            $penilaian = Penilaian::where('karyawan_id', $karyawan->id)->where('tahun', now()->year)
+                ->where('periode', $this->calculatePeriod())
+                ->first();;
+
+            if ($penilaian->periode == 'janjun') {
+                $penilaian->periode = 'Januari - Juni';
+            } elseif ($penilaian->periode == 'juldec') {
+                $penilaian->periode = 'Juli - Desember';
+            }
+
             $kriteriaNames = [
                 'service_spirit',
                 'customer_focus',
@@ -283,17 +283,16 @@ class penilaianController extends Controller
                 $komentar[$kriteriaName] = $hasilPenilaian ? $hasilPenilaian->komentar : null;
             }
             $pdf = Pdf::loadView('laporanPenilaian', compact('karyawan', 'penilaian', 'kriteriaNames', 'skor', 'komentar'));
-            $pdfFileName = 'laporan penilaian ' . $karyawan->name . ' ' .$penilaian->periode . ' ' .$penilaian->tahun .  '.pdf';
+            $pdfFileName = 'laporan penilaian ' . $karyawan->name . ' ' . $penilaian->periode . ' ' . $penilaian->tahun .  '.pdf';
             $pdf->save(storage_path('app/public/pdf/' . $pdfFileName));
             $path = 'storage/pdf/' . $pdfFileName;
-            
-            
-            
+
+
+
             return redirect($path);
             return view('laporanPenilaian', compact('karyawan', 'penilaian', 'kriteriaNames', 'skor', 'komentar'));
         } catch (\Exception $e) {
             return dd($e);
         }
     }
-    
 }

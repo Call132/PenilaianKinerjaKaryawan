@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/karyawan/update/{id}', [karyawanController::class, 'update'])->name('karyawan.update');
     Route::delete('/karyawan/{id}', [karyawanController::class, 'delete'])->name('karyawan.delete');
     Route::post('/karyawan/add', [karyawanController::class, 'store'])->name('karyawan.store');
+    Route::get('/karyawan/cetak', [karyawanController::class, 'export'])->name('karyawan.cetak');
 
 
     Route::get('/penilaian', [penilaianController::class, 'index'])->name('penilaian.index');

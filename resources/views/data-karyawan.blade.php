@@ -68,7 +68,10 @@
                         <div class="flex">
                             <a href="{{ route('karyawan.create') }}" class="btn btn-primary"><i
                                     class="fa-solid fa-plus-circle"></i> Tambah</a>
+                            <a href="{{ route('karyawan.cetak') }}" class="btn btn-info"><i
+                                    class="fa-solid fa-file-export"></i> Export </a>
                         </div>
+
                     </tfoot>
                 </table>
                 <div class="card-body">
