@@ -22,7 +22,12 @@ class hasilPenilaian extends Model
     {
         return $this->belongsTo(kriteria::class);
     }
-    public function karyawan(){
+    public function karyawan()
+    {
         return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id');
+    }
+    public function penilaian()
+    {
+        return $this->belongsTo(Penilaian::class, 'penilaian_id', 'id');
     }
 }

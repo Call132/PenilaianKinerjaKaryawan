@@ -43,7 +43,31 @@
         </div>
     </section>
     <div class="card">
-        <div class="card-body">
+
+        <div class="card-body col-12">
+            <form method="post" action="{{ route('hasil.filter') }}" class="mb-4">
+                @csrf
+                <div class="form-group row form-inline">
+                    <label for="periode">Pilih Periode:</label>
+                    <div class="col-md-2">
+                        <select class="form-control" id="periode" name="periode" required>
+                            <option value="janjun" {{ $periode==='janjun' ? 'selected' : '' }}>Januari - Juni
+                            </option>
+                            <option value="juldec" {{ $periode==='juldec' ? 'selected' : '' }}>Juli - Desember
+                            </option>
+                        </select>
+                    </div>
+                    <label for="tahun">Tahun:</label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" id="tahun" name="tahun"
+                            value="{{ $tahun ?? now()->year }}" required>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
+            </form>
+
             <table class="table ">
                 <thead>
                     <tr>
@@ -55,11 +79,24 @@
                 </thead>
                 <tbody>
                     @foreach ($karyawan as $item)
+                    @php
+                    $lastPenilaian = $item->hasilPenilaian->last();
+                    @endphp
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->hasilPenilaian->last()->nilai_akhir ?? 'Belum Dinilai'}}</td>
-                        <td>{{ $item->rekomendasi ?? 'Belum Dinilai' }}</td>
+                        <td> @if ($item->sudahDinilai($periode, $tahun))
+                            {{ $item->hasilPenilaian->last()->nilai_akhir }}
+                            @else
+                            Belum Dinilai
+                            @endif</td>
+                        <td>
+                            @if ($item->sudahDinilai($periode, $tahun))
+                            {{ $item->rekomendasi ?? 'Belum Dinilai' }}
+                            @else
+                            Belum Dinilai
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

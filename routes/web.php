@@ -34,6 +34,7 @@ Route::post('/register', [authController::class, 'register'])->name('register');
 Route::middleware('auth')->group(function () {
 
     Route::get('/', [homeController::class, 'index'])->middleware('redirecttologin');
+    Route::post('/', [homeController::class, 'filter'])->name('home.filter');
     Route::get('/karyawan', [karyawanController::class, 'index'])->name('karyawan.index');
 
     Route::get('/karyawan/add', [karyawanController::class, 'create'])->name('karyawan.create');
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('hasil-penilaian', [hasilPenilaianController::class, 'index'])->name('hasiPenilaian.index');
     Route::post('/hasil-penilaian', [hasilPenilaianController::class, 'filter'])->name('hasil.filter');
+    
 
     Route::get('/kriteria', [kriteriaController::class, 'index'])->name('kriteria.index');
     Route::post('/kriteria/add', [kriteriaController::class, 'store'])->name('kriteria.store');

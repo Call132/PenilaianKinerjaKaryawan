@@ -24,48 +24,83 @@
             @endif
     </section>
     <div class="card">
-        <div class="card-body">
+        <div class="card-body col-12">
             @if (!isset($karyawan))
             <!-- Tampilan formulir filter saat halaman diakses pertama kali -->
             <form method="post" action="{{ route('penilaian.filter') }}">
                 @csrf
-                <div class="form-group">
-                    <label for="department">Pilih Department:</label>
-                    <select name="department" id="department" class="form-control">
-                        <option value="semua"> -- Silahkan Pilih department --</option>
-                        <option value="Front office">Front office</option>
-                        <option value="Housekeeping">Housekeeping</option>
-                        <option value="Engineering">Engineering</option>
-                        <option value="Accounting">Accounting</option>
-                        <option value="Sales">Sales</option>
-                        <option value="FBS">FBS</option>
-                        <option value="FBP">FBP</option>
-                        <option value="HC & Security">HC & Security</option>
-                    </select>
-                    <div style="margin-top: 10px;">
-                        <button type="submit" class="btn btn-primary">Filter</button>
+                <div class="form-group row">
+                    <div class="form-group col-md-3">
+                        <label for="department">Pilih Department:</label>
+                        <select name="department" id="department" class="form-control">
+                            <option value="semua"> -- Silahkan Pilih department --</option>
+                            <option value="Front office">Front office</option>
+                            <option value="Housekeeping">Housekeeping</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Accounting">Accounting</option>
+                            <option value="Sales">Sales</option>
+                            <option value="FBS">FBS</option>
+                            <option value="FBP">FBP</option>
+                            <option value="HC & Security">HC & Security</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="tahun">Tahun:</label>
+                        <input type="text" class="form-control" id="tahun" value="{{ old('tahun', now()->year)  }}"
+                            name="tahun" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="periode">Periode:</label>
+                        <select class="form-control" id="periode" name="periode" required>
+                            <option value="janjun" {{ old('periode')=='janjun' ? 'selected' : '' }}>Januari - Juni
+                            </option>
+                            <option value="juldec" {{ old('periode')=='juldec' ? 'selected' : '' }}>Juli - Desember
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Filter</button>
                     </div>
                 </div>
             </form>
             @else
-            <!-- Tampilan daftar karyawan departemen setelah filter -->
             <form method="post" action="{{ route('penilaian.filter') }}">
                 @csrf
-                <div class="form-group">
-                    <label for="department">Pilih Department:</label>
-                    <select name="department" id="department" class="form-control">
-                        <option value="semua"> -- Silahkan Pilih department --</option>
-                        <option value="Front Office">Front office</option>
-                        <option value="Housekeeping">Housekeeping</option>
-                        <option value="Engineering">Engineering</option>
-                        <option value="Accounting">Accounting</option>
-                        <option value="Sales">Sales</option>
-                        <option value="FBS">FBS</option>
-                        <option value="FBP">FBP</option>
-                        <option value="HC & Security">HC & Security</option>
-                    </select>
-                    <div style="margin-top: 10px;">
-                        <button type="submit" class="btn btn-primary">Filter</button>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="department">Pilih Department:</label>
+                        <select name="department" id="department" class="form-control">
+                            <option value="semua" {{ $department == 'semua' ? 'selected' : '' }}> -- Silahkan Pilih department --</option>
+                            <option value="Front office" {{ old('department')=='Front office' ? 'selected' : '' }}>Front
+                                office</option>
+                            <option value="Housekeeping" {{ old('department')=='Housekeeping' ? 'selected' : '' }}>
+                                Housekeeping</option>
+                            <option value="Engineering" {{ old('department')=='Engineering' ? 'selected' : '' }}>
+                                Engineering</option>
+                            <option value="Accounting" {{ old('department')=='Accounting' ? 'selected' : '' }}>
+                                Accounting</option>
+                            <option value="Sales" {{ old('department')=='Sales' ? 'selected' : '' }}>Sales</option>
+                            <option value="FBS" {{ old('department')=='FBS' ? 'selected' : '' }}>FBS</option>
+                            <option value="FBP" {{ old('department')=='FBP' ? 'selected' : '' }}>FBP</option>
+                            <option value="HC & Security" {{ old('department')=='HC & Security' ? 'selected' : '' }}>HC
+                                & Security</option>
+                        </select>
+                    </div>
+
+                   
+                    <div class="form-group col-md-3">
+                        <label for="periode">Periode:</label>
+                        <select class="form-control" id="periode" name="periode" required>
+                            <option value="janjun" {{ $periode == 'janjun' ? 'selected' : '' }}>Januari - Juni</option>
+                            <option value="juldec" {{ $periode == 'juldec' ? 'selected' : '' }}>Juli - Desember</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="tahun">Tahun:</label>
+                        <input type="text" class="form-control" id="tahun" value="{{ $tahun }}" name="tahun" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Filter</button>
                     </div>
                 </div>
             </form>
@@ -84,31 +119,38 @@
                         <tbody>
 
                             @foreach ($karyawan as $data)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $data->name }}</td>
+                                <td>
+                                    @if ($data->sudahDinilai($periode, $tahun))
+                                    <span class="badge badge-success">Sudah Dinilai</span>
+                                    @else
+                                    <span class="badge badge-danger">Belum Dinilai</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('penilaian.form', $data->id) }}" class="btn btn-primary">
+                                        <i class="fa-solid fa-file"></i> Buat
+                                    </a>
 
-                            @php
-                            // Mendapatkan periode dan tahun saat ini
-                            $periode = date('m') <= 6 ? 'janjun' : 'juldec' ; $tahun=date('Y'); $status=$data->
-                                sudahDinilai($periode, $tahun) ? 'Sudah Dinilai' : 'Belum Dinilai';
-                                $badgeColor = $status === 'Sudah Dinilai' ? 'badge-success' : 'badge-secondary';
-                                @endphp
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $data->name }}</td>
-                                    <td>
-                                        <span><span class="badge {{ $badgeColor }}">{{ $status }}</span></span>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('penilaian.form', $data->id) }}" class="btn btn-primary">
-                                            <i class="fa-solid fa-file"></i> Buat
-                                        </a>
-                                        <a href="{{ route('penilaian.edit' , $data->id) }}" class="btn btn-warning"><i
-                                                class="fa-solid fa-edit"></i> Edit
-                                        </a>
-                                        <a href="{{ route('penilaian.cetak', $data->id) }}" class="btn btn-info"><i class="fa-solid fa-file"></i></a>
-                                    </td>
+                                    @if ($data->penilaian->isNotEmpty())
+                                    <a href="{{ route('penilaian.edit', $data->id) }}" class="btn btn-warning">
+                                        <i class="fa-solid fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{{ route('penilaian.cetak', $data->id) }}" class="btn btn-info">
+                                        <i class="fa-solid fa-file"></i> Cetak
+                                    </a>
+                                    @else
+                                    <!-- Tidak memberikan akses jika belum dinilai -->
+                                    <span class="btn btn-secondary disabled">
+                                        <i class="fa-solid fa-file"></i> Cetak
+                                    </span>
+                                    @endif
+                                </td>
 
-                                </tr>
-                                @endforeach
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation example">

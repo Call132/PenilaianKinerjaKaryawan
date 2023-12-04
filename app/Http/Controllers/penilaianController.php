@@ -19,23 +19,48 @@ class penilaianController extends Controller
     public function index(Request $request)
     {
         $department = $request->input('department');
+        $periode = $request->input('periode', date('n') <= 6 ? 'janjun' : 'juldec');
+        $tahun = $request->input('tahun', date('Y'));
         $karyawan = Karyawan::paginate(10);
 
-        return view('penilaian', compact('karyawan', 'department'));
+        return view('penilaian', compact('karyawan', 'department', 'tahun', 'periode'));
     }
 
     public function filter(Request $request)
     {
-        $department = $request->input('department');
+        try {
+            $request->validate([
+                'department' => 'required',
+                'tahun' => 'required',
+                'periode' => 'required',
+            ]);
 
-        if ($department === 'semua') {
-            $karyawan = Karyawan::paginate(10);
-        } else {
-            $karyawan = Karyawan::where('department', $department)->paginate(10);
+
+            $department = $request->input('department');
+            $tahun = $request->input('tahun');
+            $periode = $request->input('periode');
+
+            // Lakukan query berdasarkan filter
+            $query = Karyawan::query();
+
+            if ($department && $department != 'semua') {
+                $query->where('department', $department);
+            }
+
+            // Ambil data karyawan berdasarkan filter
+            $karyawan = $query->with(['penilaian' => function ($query) use ($periode, $tahun) {
+                $query->where('periode', $periode)->whereYear('tanggal_penilaian', $tahun);
+            }])->paginate(10);
+
+
+            return view('penilaian', compact('karyawan', 'department', 'tahun', 'periode'));
+        } catch (\Exception $e) {
+            return dd($e);
         }
-
-        return view('penilaian', compact('karyawan', 'department'));
     }
+
+
+
 
     public function form($id)
     {
@@ -49,7 +74,6 @@ class penilaianController extends Controller
         try {
             $request->validate([
                 'tanggal_penilaian' => 'required|date',
-                'tujuan' => 'required|string',
                 'tahun' => 'required',
                 'periode' => 'required',
                 'karyawan_id' => 'required',
@@ -67,7 +91,6 @@ class penilaianController extends Controller
 
             $penilaian = new Penilaian();
             $penilaian->karyawan_id = $request->karyawan_id;
-            $penilaian->tujuan = $request->tujuan;
             $penilaian->tanggal_penilaian = $request->tanggal_penilaian;
             $penilaian->tahun = $request->tahun;
             $penilaian->periode = $request->periode;
@@ -282,6 +305,7 @@ class penilaianController extends Controller
                 $skor[$kriteriaName] = $hasilPenilaian ? $hasilPenilaian->skor : null;
                 $komentar[$kriteriaName] = $hasilPenilaian ? $hasilPenilaian->komentar : null;
             }
+            //return view('laporanPenilaian', compact('karyawan', 'penilaian', 'kriteriaNames', 'skor', 'komentar'));
             $pdf = Pdf::loadView('laporanPenilaian', compact('karyawan', 'penilaian', 'kriteriaNames', 'skor', 'komentar'));
             $pdfFileName = 'laporan penilaian ' . $karyawan->name . ' ' . $penilaian->periode . ' ' . $penilaian->tahun .  '.pdf';
             $pdf->save(storage_path('app/public/pdf/' . $pdfFileName));
@@ -290,7 +314,6 @@ class penilaianController extends Controller
 
 
             return redirect($path);
-            return view('laporanPenilaian', compact('karyawan', 'penilaian', 'kriteriaNames', 'skor', 'komentar'));
         } catch (\Exception $e) {
             return dd($e);
         }

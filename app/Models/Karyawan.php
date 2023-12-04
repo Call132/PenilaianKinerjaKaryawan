@@ -36,4 +36,10 @@ class Karyawan extends Model
     {
         return $this->hasMany(hasilPenilaian::class, 'karyawan_id', 'id');
     }
+     public function hasilPenilaianByPeriod($periode, $tahun)
+    {
+        return $this->hasilPenilaian()
+            ->where('periode', $periode)
+            ->whereYear('tanggal_penilaian', $tahun);
+    }
 }

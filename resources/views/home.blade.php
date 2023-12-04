@@ -13,69 +13,80 @@
         <div class="section-header">
             <h1>Dashboard</h1>
         </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="far fa-user"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Admin</h4>
-                        </div>
-                        <div class="card-body">
-                            6
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="far fa-newspaper"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>News</h4>
-                        </div>
-                        <div class="card-body">
-                            42
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="far fa-file"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Reports</h4>
-                        </div>
-                        <div class="card-body">
-                            1,201
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="fas fa-circle"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Online Users</h4>
-                        </div>
-                        <div class="card-body">
-                            47
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
+    <div class="card">
+        <div class="card-body col-12">
+            <form method="post" action="{{ route('home.filter') }}" class="mb-4">
+                @csrf
+                <div class="form-row">
+                    <div class="form-group ">
+                        <label for="periode">Pilih Periode:</label>
+                        <select class="form-control" id="periode" name="periode" required>
+                            <option value="janjun" {{ $periode==='janjun' ? 'selected' : '' }}>Januari - Juni</option>
+                            <option value="juldec" {{ $periode==='juldec' ? 'selected' : '' }}>Juli - Desember</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="tahun">Pilih Tahun:</label>
+                        <input type="text" class="form-control" id="tahun" name="tahun"
+                            value="{{ old('tahun', now()->year) }}" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Filter</button>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama Karyawan</th>
+                        <th>Nilai Akhir</th>
+                        <th>Peringkat</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach ($karyawan as $data)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $data->name }}</td>
+                        <td>
+                            @if ($data->sudahDinilai($periode, $tahun))
+                            {{ $data->hasilPenilaian->last()->nilai_akhir ?? 'Belum Dinilai' }}
+                            @else
+                            Belum Dinilai
+                            @endif
+                        </td>
+                        <td>
+                            {{ $data->peringkat ?? 'Penilaian Belum Dilakukan' }}
+                        </td>
+                    </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+            {{-- <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if ($karyawan->currentPage() > 1)
+                    <li class="page-item"><a class="page-link" href="{{ $karyawan->previousPageUrl() }}">Previous</a>
+                    </li>
+                    @endif
+
+                    @for ($i = 1; $i <= $karyawan->lastPage(); $i++)
+                        <li class="page-item {{ ($i == $karyawan->currentPage()) ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $karyawan->url($i) }}">{{ $i }}</a>
+                        </li>
+                        @endfor
+                        @if ($karyawan->currentPage() < $karyawan->lastPage())
+                            <li class="page-item"><a class="page-link" href="{{ $karyawan->nextPageUrl() }}">Next</a>
+                            </li>
+                            @endif
+                </ul>
+            </nav> --}}
+        </div>
+    </div>
 </div>
 
 

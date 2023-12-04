@@ -36,7 +36,7 @@
                 @csrf
                 <div class="form-group row">
                     <input type="hidden" name="karyawan_id" value="{{ $karyawan->id }}">
-                    <div class="col-md-6">
+                    <div class="col-md-6 " >
                         <label for="nama">Nama Karyawan :</label>
                         <input value="{{ $karyawan->name }}" type="text" class="form-control" id="nama" name="nama"
                             placeholder="Masukkan Nama Karyawan">
@@ -106,40 +106,7 @@
 
                 </div>
                 <hr>
-                <div class="card-header">
-                    <h6>Tujuan Penilaian (Centang kotak yang sesuai)</h6>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" value="masaPercobaan" name="tujuan" id="masaPercobaan" required>
-                    <label class="form-check-label" for="masaPercobaan">
-                        Masa Percobaan 1,2,3
-                    </label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" value="promosi" id="promosi" required>
-                    <label class="form-check-label" for="promosi">
-                        Promosi
-                    </label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" value="penilaianBerkala"
-                        id="penilaianBerkala" required>
-                    <label class="form-check-label" for="penilaianBerkala">
-                        Penilaian Berkala
-                    </label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" value="reviewEnamBulan"
-                        id="reviewEnamBulan" required>
-                    <label class="form-check-label" for="reviewEnamBulan">
-                        Review Enam Bulan
-                    </label>
-                </div>
-
-
+                
                 <div class="mt-3">
                     <ul>
                         <li>Skor 5: Pelaku Luar Biasa</li>

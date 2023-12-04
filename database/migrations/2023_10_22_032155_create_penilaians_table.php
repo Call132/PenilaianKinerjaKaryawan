@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('penilaian', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('karyawan_id');
-            $table->string('tujuan');
             $table->date('tanggal_penilaian');
             $table->year('tahun');
             $table->enum('periode', ['janjun', 'juldec']);
