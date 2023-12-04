@@ -91,10 +91,10 @@ class penilaianController extends Controller
 
             $penilaian = new Penilaian();
             $penilaian->karyawan_id = $request->karyawan_id;
-            $penilaian->tanggal_penilaian = $request->tanggal_penilaian;
-            $penilaian->tahun = $request->tahun;
-            $penilaian->periode = $request->periode;
-            $karyawan->penilaian_status = 1;
+            $penilaian->tanggal_penilaian = $request->input('tanggal_penilaian');
+            $penilaian->tahun = $request->input('tahun');
+            $penilaian->periode = $request->input('periode');
+           
 
             $kriteriaNames = [
                 'service_spirit',
@@ -128,6 +128,8 @@ class penilaianController extends Controller
                     'karyawan_id' => $karyawan->id,
                     'skor' => $request->input('nilai_' . $kriteriaName),
                     'komentar' => $request->input('komentar_' . $kriteriaName),
+                    'periode' => $request->input('periode'),
+                    'tahun' => $request->input('tahun'),
                 ]);
 
                 $hasilPenilaian->save();

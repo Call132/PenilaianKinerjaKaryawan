@@ -67,6 +67,9 @@
                     </div>
                 </div>
             </form>
+            @if(request()->has('periode') && request()->has('tahun') && $karyawan->count() > 0)
+
+
 
             <table class="table ">
                 <thead>
@@ -79,27 +82,33 @@
                 </thead>
                 <tbody>
                     @foreach ($karyawan as $item)
-                    @php
-                    $lastPenilaian = $item->hasilPenilaian->last();
-                    @endphp
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td> @if ($item->sudahDinilai($periode, $tahun))
-                            {{ $item->hasilPenilaian->last()->nilai_akhir }}
-                            @else
-                            Belum Dinilai
-                            @endif</td>
-                        <td>
-                            @if ($item->sudahDinilai($periode, $tahun))
-                            {{ $item->rekomendasi ?? 'Belum Dinilai' }}
-                            @else
-                            Belum Dinilai
-                            @endif
-                        </td>
-                    </tr>
+                        @php
+                            $lastPenilaian = $item->hasilPenilaian->where('periode', $periode)->where('tahun', $tahun)->last();
+                            $threshold = 0.4;
+                        @endphp
+                
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>
+                                @if ($item->sudahDinilai($periode, $tahun) && $lastPenilaian)
+                                    {{ $lastPenilaian->nilai_akhir }}
+                                @else
+                                    Belum Dinilai
+                                @endif
+                            </td>
+                            <td>
+                                @if ($item->sudahDinilai($periode, $tahun) && $lastPenilaian)
+                                    {{ $lastPenilaian->nilai_akhir >= $threshold ? 'Dipertahankan' : 'Tidak Dipertahankan' }}
+                                @else
+                                    Belum Dinilai
+                                @endif
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
+                
+
             </table>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
@@ -119,6 +128,7 @@
                             @endif
                 </ul>
             </nav>
+            @endif
         </div>
     </div>
 

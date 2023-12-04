@@ -19,50 +19,6 @@ class hasilPenilaianController extends Controller
             $tahun = $request->input('tahun', date('Y'));
             $karyawan = Karyawan::paginate(10);
 
-
-            foreach ($karyawan as $karyawanItem) {
-                $hasilPenilaian = $karyawanItem->hasilPenilaian;
-
-                if ($hasilPenilaian->isEmpty()) {
-                    $karyawanItem->update(['rekomendasi' => 'Belum Dinilai']);
-                    continue;
-                }
-
-                $nilaiAkhir = 0; // Reset nilaiAkhir for each karyawanItem
-                $skorNormalisasi = 0;
-                foreach ($hasilPenilaian as $penilaian) {
-                    if ($penilaian->penilaian->periode === $periode && $penilaian->penilaian->tahun == $tahun) {
-                        $bobot = Kriteria::find($penilaian->kriteria_id)->bobot;
-                        $maxSkor = HasilPenilaian::where('kriteria_id', $penilaian->kriteria_id)
-                            ->whereHas('penilaian', function ($query) use ($periode, $tahun) {
-                                $query->where('periode', $periode)->where('tahun', $tahun);
-                            })
-                            ->max('skor');
-                        $minSkor = HasilPenilaian::where('kriteria_id', $penilaian->kriteria_id)
-                            ->whereHas('penilaian', function ($query) use ($periode, $tahun) {
-                                $query->where('periode', $periode)->where('tahun', $tahun);
-                            })
-                            ->min('skor');
-
-                        $skorNormalisasi = $penilaian->skor / $maxSkor;
-
-                        $penilaian->update(['skor_normalisasi' => $skorNormalisasi]);
-                        $nilaiAkhir += $bobot * $skorNormalisasi;
-
-                        $penilaian->update(['nilai_akhir' => number_format($nilaiAkhir, 2)]);
-                    }
-                }
-
-                $threshold = 0.4;
-
-
-                $rekomendasi = $nilaiAkhir >= $threshold ? 'Dipertahankan' : 'Tidak Dipertahankan';
-                $karyawanItem->update(['rekomendasi' => $rekomendasi]);
-
-                $skorNormalisasi = 0;
-                $nilaiAkhir = 0;
-            }
-
             // Setelah selesai iterasi karyawan, tampilkan view
             return view('hasilPenilaian', compact('karyawan', 'periode', 'tahun'));
         } catch (\Exception $e) {
@@ -83,7 +39,11 @@ class hasilPenilaianController extends Controller
 
 
             foreach ($karyawan as $karyawanItem) {
-                $hasilPenilaian = $karyawanItem->hasilPenilaian;
+                $hasilPenilaian = HasilPenilaian::where('karyawan_id', $karyawanItem->id)
+                    ->where('periode', $periode)
+                    ->where('tahun', $tahun)
+                    ->get();
+
 
                 if ($hasilPenilaian->isEmpty()) {
                     $karyawanItem->update(['rekomendasi' => 'Belum Dinilai']);
@@ -112,8 +72,10 @@ class hasilPenilaianController extends Controller
                         $nilaiAkhir += $bobot * $skorNormalisasi;
 
                         $penilaian->update(['nilai_akhir' => number_format($nilaiAkhir, 2)]);
+                        
                     }
                 }
+
 
                 $threshold = 0.4;
 

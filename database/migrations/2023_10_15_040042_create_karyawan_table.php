@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('no_hp');
             $table->date('joining_date');
             $table->string('status');
-            $table->boolean('penilaian_status')->default(false);
+
             $table->string('rekomendasi')->nullable();
             $table->timestamps();
         });

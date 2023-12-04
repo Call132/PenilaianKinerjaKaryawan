@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('penilaian_id');
             $table->unsignedBigInteger('kriteria_id');
             $table->unsignedBigInteger('karyawan_id');
+            $table->enum('periode', ['janjun', 'juldec']);
+            $table->year('tahun');
             $table->integer('skor')->nullable();
             $table->string('komentar')->nullable();
             $table->decimal('skor_normalisasi', 5, 2)->nullable();

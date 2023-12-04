@@ -13,6 +13,8 @@ class hasilPenilaian extends Model
         'penilaian_id',
         'kriteria_id',
         'karyawan_id',
+        'periode',
+        'tahun',
         'skor',
         'komentar',
         'skor_normalisasi',
