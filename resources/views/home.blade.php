@@ -49,12 +49,18 @@
                 <tbody>
 
                     @foreach ($karyawan as $data)
+                    @php
+                    $lastPenilaian = $data->hasilPenilaian->where('periode', $periode)->where('tahun', $tahun)->last();
+                    $threshold = 0.4;
+
+                    @endphp
+                    {{-- @dd(floatval($lastPenilaian->nilai_akhir)) --}}
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->name }}</td>
                         <td>
-                            @if ($data->sudahDinilai($periode, $tahun))
-                            {{ $data->hasilPenilaian->last()->nilai_akhir ?? 'Belum Dinilai' }}
+                            @if ($data->sudahDinilai($periode, $tahun) && $lastPenilaian)
+                            {{ floatval($lastPenilaian->nilai_akhir) }}
                             @else
                             Belum Dinilai
                             @endif

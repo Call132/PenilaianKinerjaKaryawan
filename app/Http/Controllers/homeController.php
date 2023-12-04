@@ -11,28 +11,34 @@ class homeController extends Controller
 {
     public function index(Request $request)
     {
-        $periode = $request->input('periode', date('n') <= 6 ? 'janjun' : 'juldec');
-        $tahun = $request->input('tahun', date('Y'));
+        $periode = 'janjun';
+        $tahun = 2024;
 
-        $karyawan = Karyawan::all(); // Ganti 10 dengan jumlah item per halaman yang diinginkan
+        // ...
 
+        // Menggunakan Eloquent untuk mendapatkan data karyawan dengan nilai akhir
+        $karyawan = Karyawan::with(['hasilPenilaian' => function ($query) use ($periode, $tahun) {
+            $query->where('periode', $periode)->where('tahun', $tahun);
+        }])
+            ->get();
 
-        // Menambahkan peringkat pada setiap karyawan
-        $peringkat = 1;
-        foreach ($karyawan as $data) {
-            $data->nilai_akhir = $data->hasilPenilaian->last()->nilai_akhir ?? 0;
-        }
+        // Memberikan nilai akhir pada setiap karyawan
+        $karyawan->each(function ($data) use ($periode, $tahun) {
+            $data->nilai_akhir = $data->hasilPenilaian->isEmpty() ? 0 : $data->hasilPenilaian->max('nilai_akhir');
+        });
 
-        // Mengurutkan array karyawan berdasarkan nilai akhir secara descending
+        // Mengurutkan karyawan berdasarkan nilai akhir secara descending
         $karyawan = $karyawan->sortByDesc('nilai_akhir');
 
-
-
-        // Menambahkan peringkat pada setiap karyawan
+        // Memberikan peringkat berdasarkan nilai akhir
+        $ranking = 1;
         foreach ($karyawan as $data) {
-            $data->peringkat = $peringkat;
-            $peringkat++;
+            $data->peringkat = $ranking;
+            $ranking++;
         }
+
+        // ...
+
 
         return view('home', compact('karyawan', 'periode', 'tahun'));
     }
@@ -55,25 +61,8 @@ class homeController extends Controller
                     ->where('tahun', $tahun)
                     ->get();
             }
-            $query = Karyawan::query();
+            dump($karyawan);
 
-            $karyawan = $query->with(['penilaian' => function ($query) use ($periode, $tahun) {
-                $query->where('periode', $periode)->whereYear('tanggal_penilaian', $tahun);
-            }])->paginate(10);
-
-            $peringkat = 1;
-            foreach ($karyawan as $data) {
-                $data->nilai_akhir = $data->hasilPenilaian->last()->nilai_akhir ?? 0;
-            }
-
-            // Mengurutkan array karyawan berdasarkan nilai akhir secara descending
-            $karyawan = $karyawan->sortByDesc('nilai_akhir');
-
-            // Menambahkan peringkat pada setiap karyawan
-            foreach ($karyawan as $data) {
-                $data->peringkat = $peringkat;
-                $peringkat++;
-            }
 
 
             return view('home', compact('karyawan', 'periode', 'tahun'));
