@@ -74,11 +74,11 @@
                     <div class="col-md-6">
                         <label for="mulaiBekerja">Mulai Bekerja (tgl/bln/thn) :</label>
                         <input value="{{ $karyawan->joining_date }}" type="date" class="form-control" id="mulaiBekerja"
-                            name="mulaiBekerja">
+                            name="mulaiBekerja" required>
                     </div>
                     <div class="col-md-6">
                         <label for="tglMulaiposisi">Tanggal Mulai di Jabatan/Posisi ini :</label>
-                        <input type="date" class="form-control" id="tglMulaiposisi" name="tglMulaiposisi">
+                        <input type="date" class="form-control" id="tglMulaiposisi" name="tglMulaiposisi" required>
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
                     <div class="col-md-6">
                         <label for="tglPenilaian">Tanggal Penilaian :</label>
                         <input type="date" name="tanggal_penilaian" id="tglPenilaian" class="form-control"
-                            placeholder="">
+                            required>
                     </div>
 
 

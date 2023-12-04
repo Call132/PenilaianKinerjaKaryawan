@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\hasilPenilaian;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ class homeController extends Controller
     {
         $periode = $request->input('periode', date('n') <= 6 ? 'janjun' : 'juldec');
         $tahun = $request->input('tahun', date('Y'));
-        
+
         $karyawan = Karyawan::all(); // Ganti 10 dengan jumlah item per halaman yang diinginkan
 
 
@@ -24,7 +25,7 @@ class homeController extends Controller
 
         // Mengurutkan array karyawan berdasarkan nilai akhir secara descending
         $karyawan = $karyawan->sortByDesc('nilai_akhir');
-        
+
 
 
         // Menambahkan peringkat pada setiap karyawan
@@ -42,9 +43,18 @@ class homeController extends Controller
                 'periode' => 'required',
                 'tahun' => 'required',
             ]);
-            
+
             $periode = $request->input('periode');
             $tahun = $request->input('tahun');
+            $karyawan = Karyawan::paginate(10);
+
+
+            foreach ($karyawan as $karyawanItem) {
+                $hasilPenilaian = hasilPenilaian::where('karyawan_id', $karyawanItem->id)
+                    ->where('periode', $periode)
+                    ->where('tahun', $tahun)
+                    ->get();
+            }
             $query = Karyawan::query();
 
             $karyawan = $query->with(['penilaian' => function ($query) use ($periode, $tahun) {
