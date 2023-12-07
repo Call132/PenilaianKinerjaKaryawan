@@ -109,6 +109,7 @@
             <div class="modal-body">
                 {{-- Form edit kriteria --}}
                 <form id="editKriteriaForm" action="{{ route('kriteria.update', $item->id) }}" method="POST">
+                    
                     @csrf
                     @method('PUT')
 
@@ -194,6 +195,7 @@
 
         var actionUrl = '{{ route("kriteria.update", ":id") }}';
         actionUrl = actionUrl.replace(':id', id);
+        
 
         $('#editKriteriaForm').attr('action', actionUrl);
         $('#editKriteriaNama').val(nama);

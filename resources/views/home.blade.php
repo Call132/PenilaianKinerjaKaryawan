@@ -14,16 +14,79 @@
             <h1>Dashboard</h1>
         </div>
     </section>
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card card-statistic-1">
+                <div class="card-icon bg-primary">
+                    <i class="far fa-newspaper"></i>
+                </div>
+                <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>Total Department</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ $totalDepartments }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card card-statistic-1">
+                <div class="card-icon bg-info">
+                    <i class="far fa-user"></i>
+                </div>
+                <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>Total Karyawan</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ $karyawan->count() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card card-statistic-1">
+                <div class="card-icon bg-success">
+                    <i class="fas fa-check-circle fa-3x"></i>
+                </div>
+                <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>Karyawan Dipertahankan</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ $dipertahankan }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card card-statistic-1">
+                <div class="card-icon bg-warning">
+                    <i class="fas fa-times-circle fa-3x"></i>
+                </div>
+                <div class="card-wrap">
+                    <div class="card-header">
+                        <h4>Karyawan Tidak Dipertahankan</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ $tidakDipertahankan }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body col-12">
-            <form method="post" action="{{ route('home.filter') }}" class="mb-4">
+            
+           {{--  <form method="post" action="{{ route('home.filter') }}" class="mb-4">
                 @csrf
                 <div class="form-row">
                     <div class="form-group ">
                         <label for="periode">Pilih Periode:</label>
                         <select class="form-control" id="periode" name="periode" required>
-                            <option value="janjun" {{ $periode==='janjun' ? 'selected' : '' }}>Januari - Juni</option>
-                            <option value="juldec" {{ $periode==='juldec' ? 'selected' : '' }}>Juli - Desember</option>
+                            <option value="janjun" {{ (now()->month >= 1 && now()->month <= 6) ? 'selected' : '' }}>Januari - Juni</option>
+                            <option value="juldec" {{ (now()->month > 6) ? 'selected' : '' }} >Juli - Desember</option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">
@@ -54,7 +117,7 @@
                     $threshold = 0.4;
 
                     @endphp
-                    {{-- @dd(floatval($lastPenilaian->nilai_akhir)) --}}
+                    
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->name }}</td>
@@ -73,7 +136,7 @@
 
                 </tbody>
             </table>
-            {{-- <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     @if ($karyawan->currentPage() > 1)
                     <li class="page-item"><a class="page-link" href="{{ $karyawan->previousPageUrl() }}">Previous</a>

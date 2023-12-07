@@ -36,7 +36,7 @@ class karyawanController extends Controller
             $karyawan->status = $request->status;
             $karyawan->save();
 
-            return redirect()->route('karyawan.create')->with('success', 'Karyawan berhasil ditambahkan');
+            return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with(
                 'error',

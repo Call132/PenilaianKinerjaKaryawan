@@ -12,7 +12,7 @@
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="/">Yaa</a>
         </div>
-        @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('general manager'))
+        @if (Auth::user()->hasRole('admin|general manager'))
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             <li class="nav">
@@ -38,6 +38,11 @@
             <li class="nav">
                 <a href="{{ url('/kriteria') }}" class="nav-link" style="line-height: 1;"><i
                         class="fas fa-fire"></i><span>Kriteria</span></a>
+
+            </li>
+            <li class="nav">
+                <a href="{{ url('/users') }}" class="nav-link" style="line-height: 1;"><i
+                        class="fas fa-fire"></i><span>User</span></a>
 
             </li>
         </ul>

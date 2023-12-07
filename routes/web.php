@@ -6,6 +6,7 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\karyawanController;
 use App\Http\Controllers\kriteriaController;
 use App\Http\Controllers\penilaianController;
+use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,7 +57,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('hasil-penilaian', [hasilPenilaianController::class, 'index'])->name('hasiPenilaian.index');
     Route::post('/hasil-penilaian', [hasilPenilaianController::class, 'filter'])->name('hasil.filter');
-    
+
+    Route::get('/users', [userController::class, 'index'])->name('user');
+    Route::post('/users', [userController::class, 'store'])->name('user.store');
+    Route::put('/users/{id}', [userController::class, 'update'])->name('user.update');
+    Route::delete('/users/{id}', [userController::class, 'destroy'])->name('user.delete');
+
+
+
 
     Route::get('/kriteria', [kriteriaController::class, 'index'])->name('kriteria.index');
     Route::post('/kriteria/add', [kriteriaController::class, 'store'])->name('kriteria.store');

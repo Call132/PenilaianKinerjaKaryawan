@@ -11,36 +11,25 @@ class homeController extends Controller
 {
     public function index(Request $request)
     {
-        $periode = 'janjun';
-        $tahun = 2024;
+        $karyawan = Karyawan::all();
+        $departments = Karyawan::pluck('department')->unique();
 
-        // ...
-
-        // Menggunakan Eloquent untuk mendapatkan data karyawan dengan nilai akhir
-        $karyawan = Karyawan::with(['hasilPenilaian' => function ($query) use ($periode, $tahun) {
-            $query->where('periode', $periode)->where('tahun', $tahun);
-        }])
-            ->get();
-
-        // Memberikan nilai akhir pada setiap karyawan
-        $karyawan->each(function ($data) use ($periode, $tahun) {
-            $data->nilai_akhir = $data->hasilPenilaian->isEmpty() ? 0 : $data->hasilPenilaian->max('nilai_akhir');
-        });
-
-        // Mengurutkan karyawan berdasarkan nilai akhir secara descending
-        $karyawan = $karyawan->sortByDesc('nilai_akhir');
-
-        // Memberikan peringkat berdasarkan nilai akhir
-        $ranking = 1;
-        foreach ($karyawan as $data) {
-            $data->peringkat = $ranking;
-            $ranking++;
-        }
-
-        // ...
+        // Menghitung jumlah departemen
+        $totalDepartments = $departments->count();
 
 
-        return view('home', compact('karyawan', 'periode', 'tahun'));
+
+        $dipertahankan = Karyawan::where('rekomendasi', 'Dipertahankan')->count();
+
+        $tidakDipertahankan = Karyawan::where('rekomendasi', 'Tidak Dipertahankan')->count();
+
+
+
+
+
+
+
+        return view('home', compact('karyawan', 'totalDepartments', 'dipertahankan', 'tidakDipertahankan'));
     }
     public function filter(Request $request)
     {
@@ -61,7 +50,6 @@ class homeController extends Controller
                     ->where('tahun', $tahun)
                     ->get();
             }
-            dump($karyawan);
 
 
 

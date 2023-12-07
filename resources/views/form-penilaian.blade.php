@@ -36,10 +36,10 @@
                 @csrf
                 <div class="form-group row">
                     <input type="hidden" name="karyawan_id" value="{{ $karyawan->id }}">
-                    <div class="col-md-6 " >
+                    <div class="col-md-6 ">
                         <label for="nama">Nama Karyawan :</label>
                         <input value="{{ $karyawan->name }}" type="text" class="form-control" id="nama" name="nama"
-                            placeholder="Masukkan Nama Karyawan">
+                            placeholder="Masukkan Nama Karyawan" disabled>
                     </div>
                     <div class="col-md-6">
                         <label for="masaJabatan">Masa Jabatan :</label>
@@ -52,11 +52,11 @@
                     <div class="col-md-6">
                         <label for="posisi">Posisi :</label>
                         <input value="{{ $karyawan->posisi }}" type="text" class="form-control" id="posisi"
-                            name="posisi" placeholder="Masukkan Posisi">
+                            name="posisi" placeholder="Masukkan Posisi" disabled>
                     </div>
                     <div class="col-md-6">
                         <label for="department">Department :</label>
-                        <select name="department" id="department" class="form-control">
+                        <select name="department" id="department" class="form-control" disabled>
                             <option value="{{ $karyawan->department }}">{{ $karyawan->department }}</option>
                             <option value="Front office">Front office</option>
                             <option value="Housekeeping">Housekeeping</option>
@@ -74,7 +74,7 @@
                     <div class="col-md-6">
                         <label for="mulaiBekerja">Mulai Bekerja (tgl/bln/thn) :</label>
                         <input value="{{ $karyawan->joining_date }}" type="date" class="form-control" id="mulaiBekerja"
-                            name="mulaiBekerja" required>
+                            name="mulaiBekerja" disabled>
                     </div>
                     <div class="col-md-6">
                         <label for="tglMulaiposisi">Tanggal Mulai di Jabatan/Posisi ini :</label>
@@ -85,28 +85,28 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label for="tglPenilaian">Tanggal Penilaian :</label>
-                        <input type="date" name="tanggal_penilaian" id="tglPenilaian" class="form-control"
-                            required>
+                        <input type="date" value="{{ now()->format('Y-m-d') }}" name="tanggal_penilaian"
+                            id="tglPenilaian" class="form-control" disabled>
                     </div>
-
-
                     <div class="col-md-3">
 
                         <label for="tahun">Tahun:</label>
-                        <input type="number" class="form-control" id="tahun" name="tahun" required>
+                        <input type="number" value="{{ now()->year }}" class="form-control" id="tahun" name="tahun"
+                            disabled>
                     </div>
 
                     <div class="col-md-3">
                         <label for="periode">Periode:</label>
-                        <select class="form-control" id="periode" name="periode" required>
-                            <option value="janjun">Januari - Juni</option>
-                            <option value="juldec">Juli - Desember</option>
+                        <select class="form-control" id="periode" name="periode" disabled>
+                            <option value="janjun" {{ (now()->month >= 1 && now()->month <= 6) ? 'selected' : '' }}>
+                                    Januari - Juni</option>
+                            <option value="juldec" {{ (now()->month > 6) ? 'selected' : '' }} >Juli - Desember</option>
                         </select>
                     </div>
 
                 </div>
                 <hr>
-                
+
                 <div class="mt-3">
                     <ul>
                         <li>Skor 5: Pelaku Luar Biasa</li>
@@ -349,7 +349,7 @@
                             </td>
                             <td><input type="text" class="form-control" name="komentar_analyze_perspective"></td>
                         </tr>
-                        
+
                     </tbody>
                 </table>
 

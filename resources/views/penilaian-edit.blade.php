@@ -40,7 +40,7 @@
                     <div class="col-md-6">
                         <label for="nama">Nama Karyawan :</label>
                         <input value="{{ $karyawan->name }}" type="text" class="form-control" id="nama" name="nama"
-                            placeholder="Masukkan Nama Karyawan">
+                            placeholder="Masukkan Nama Karyawan" disabled>
                     </div>
                     <div class="col-md-6">
                         <label for="masaJabatan">Masa Jabatan :</label>
@@ -53,11 +53,11 @@
                     <div class="col-md-6">
                         <label for="posisi">Posisi :</label>
                         <input value="{{ $karyawan->posisi }}" type="text" class="form-control" id="posisi"
-                            name="posisi" placeholder="Masukkan Posisi">
+                            name="posisi" placeholder="Masukkan Posisi Karyawan" disabled>
                     </div>
                     <div class="col-md-6">
                         <label for="department">Department :</label>
-                        <select name="department" id="department" class="form-control">
+                        <select name="department" id="department" class="form-control" disabled>
                             <option value="{{ $karyawan->department }}">{{ $karyawan->department }}</option>
                             <option value="Front office">Front office</option>
                             <option value="Housekeeping">Housekeeping</option>
@@ -75,7 +75,7 @@
                     <div class="col-md-6">
                         <label for="mulaiBekerja">Mulai Bekerja (tgl/bln/thn) :</label>
                         <input value="{{ $karyawan->joining_date }}" type="date" class="form-control" id="mulaiBekerja"
-                            name="mulaiBekerja">
+                            name="mulaiBekerja" disabled>
                     </div>
                     <div class="col-md-6">
                         <label for="tglMulaiposisi">Tanggal Mulai di Jabatan/Posisi ini : </label>
@@ -87,7 +87,7 @@
                     <div class="col-md-6">
                         <label for="tglPenilaian">Tanggal Penilaian :</label>
                         <input type="date" value="{{ $penilaian->tanggal_penilaian }}" name="tanggal_penilaian"
-                            id="tglPenilaian" class="form-control" placeholder="">
+                            id="tglPenilaian" class="form-control" placeholder="" disabled>
                     </div>
 
 
@@ -95,12 +95,12 @@
 
                         <label for="tahun">Tahun:</label>
                         <input type="number" value="{{ $penilaian->tahun }}" class="form-control" id="tahun"
-                            name="tahun" required>
+                            name="tahun" disabled>
                     </div>
 
                     <div class="col-md-3">
                         <label for="periode">Periode:</label>
-                        <select class="form-control" id="periode" name="periode" required>
+                        <select class="form-control" id="periode" name="periode" disabled>
                             @php
                             if($penilaian->periode == 'janjun'){
                             $penilaian->periode = 'Januari - Juni';
@@ -116,40 +116,6 @@
 
                 </div>
                 <hr>
-                <div class="card-header">
-                    <h6>Tujuan Penilaian (Centang kotak yang sesuai)</h6>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" value="masaPercobaan" name="tujuan" id="masaPercobaan"
-                        {{ $penilaian->tujuan == 'masaPercobaan' ? 'checked' : '' }}>
-                    <label class="form-check-label" for="masaPercobaan">
-                        Masa Percobaan 1,2,3
-                    </label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" value="promosi" id="promosi" {{
-                        $penilaian->tujuan == 'promosi' ? 'checked' : '' }}>
-                    <label class="form-check-label" for="promosi">
-                        Promosi
-                    </label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" value="penilaianBerkala"
-                        id="penilaianBerkala" {{ $penilaian->tujuan == 'penilaianBerkala' ? 'checked' : '' }}>
-                    <label class="form-check-label" for="penilaianBerkala">
-                        Penilaian Berkala
-                    </label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tujuan" value="reviewEnamBulan"
-                        id="reviewEnamBulan" {{ $penilaian->tujuan == 'reviewEnamBulan' ? 'checked' : '' }}>
-                    <label class="form-check-label" for="reviewEnamBulan">
-                        Review Enam Bulan
-                    </label>
-                </div>
                 <div class="mt-3">
                     <ul>
                         <li>Skor 5: Pelaku Luar Biasa</li>
@@ -163,7 +129,7 @@
                     <thead>
                         <tr>
                             <th>Kriteria Penilaian</th>
-                            <th>Bobot</th>
+                            <th>Skor</th>
                             <th>Komentar</th>
                         </tr>
                     </thead>
